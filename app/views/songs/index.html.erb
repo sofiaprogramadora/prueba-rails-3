@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Filter!</h1>
+<%= form_with() do |form| %>
+  <div class="field">
+    <%= form.label @songs_with_filter, "Genres" %> <br>
+    <%= form.select @songs_with_filter, options_from_collection_for_select(Genre.all, :id, :name) %>
+  </div>
+  <%= form.submit %>
+<% end %>
+
+<h1>Songs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Genre</th>
+      <th>Duration</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @songs_with_filter.each do |song| %>
+      <tr>
+        <td><%= song.name %> | &nbsp</td>
+        <td> <%= song.genre.name %> | </td>
+        <td> <%= song.duration %></td>
+        <td><%= link_to 'Show |', song %>&nbsp</td>
+        <td><%= link_to 'Edit |', edit_song_path(song) %>&nbsp</td>
+        <td><%= link_to 'Destroy |', song, method: :delete, data: { confirm: 'Are you sure?' } %>&nbsp</td>
+        <td><%= link_to 'Add To Playlist', add_to_playlist_song_path(song), method: :post %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Song', new_song_path %>
